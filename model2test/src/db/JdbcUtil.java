@@ -1,8 +1,8 @@
 package db;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.Statement;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
@@ -14,9 +14,8 @@ public class JdbcUtil {
 		Connection con = null;
 		
 		try {
-			Context initCtx = new InitialContext();
-			Context envCtx = (Context)initCtx.lookup("java:comp/env");
-			DataSource ds = (DataSource)envCtx.lookup("jdbc/MySQLDB");
+			Context init = new InitialContext();
+			DataSource ds = (DataSource)init.lookup("java:comp/env/jdbc/MySQLDB");
 			con = ds.getConnection();
 			con.setAutoCommit(false);
 		} catch (Exception e) {
@@ -35,10 +34,10 @@ public class JdbcUtil {
 		}
 	}
 	
-	public static void close(Statement stmt) {
+	public static void close(PreparedStatement pstmt) {
 		
 		try {
-			stmt.close();
+			pstmt.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
