@@ -48,7 +48,7 @@
 		<h2>글 내용 상세보기</h2>
 		<section id="basicInfoArea">
 			제목 :
-			<%=article.getBoard_subject() %>
+			<%=article.getBoard_subject() %><br/>
 			첨부파일 :
 			<%if (!(article.getBoard_file()==null)) { %>
 				<a href="file_down?downFile=<%=article.getBoard_file() %>"> <%=article.getBoard_file() %></a>
