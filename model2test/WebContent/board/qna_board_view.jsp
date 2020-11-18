@@ -51,7 +51,7 @@
 			<%=article.getBoard_subject() %><br/>
 			첨부파일 :
 			<%if (!(article.getBoard_file()==null)) { %>
-				<a href="file_down?downFile=<%=article.getBoard_file() %>"> <%=article.getBoard_file() %></a>
+				<a href="file_down.jsp?file_name=<%=article.getBoard_file() %>"> <%=article.getBoard_file() %></a>
 			<%} %>
 		</section>
 		<section id="articleContentArea">

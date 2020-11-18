@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import action.Action;
 import action.BoardDetailAction;
 import action.BoardListAction;
+import action.BoardReplyFormAction;
 import action.BoardWriteProAction;
 import vo.ActionForward;
 
@@ -57,6 +58,13 @@ public class BoardFrontController extends HttpServlet {
 			}
 		} else if (command.contentEquals("/boardDetail.do")) {
 			action = new BoardDetailAction();
+			try {
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} else if (command.contentEquals("/boardReplyForm.do")) {
+			action = new BoardReplyFormAction();
 			try {
 				forward = action.execute(request, response);
 			} catch (Exception e) {

@@ -6,10 +6,10 @@
 <%
 	String fileName = request.getParameter("file_name");
 	
-// 	String savePath = "upload";
+// 	String savePath = "boardUpload";
 // 	ServletContext context = getServletContext();
 // 	String sDownloadPath = context.getRealPath(savePath);
-	String sDownloadPath = "c:/upload";
+	String sDownloadPath = "c:/boardUpload";
 	String sFilePath = sDownloadPath + "/" + fileName;
 	byte b[] = new byte[4096];
 	FileInputStream in = new FileInputStream(sFilePath);
