@@ -5,6 +5,7 @@ import static db.JdbcUtil.close;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import javax.sql.DataSource;
@@ -147,8 +148,7 @@ public class BoardDAO {
 			else
 				num = 1;
 			
-			sql = "INSERT INTO board (board_num, board_name, board_pass, board_subject,";
-			sql += "Board_content, board_file, board_re_ref, " + "board_re_lev, board_re_seq, board_readcount, " + "board_date) values(?,?,?,?,?,?,?,?,?,?,now())";
+			sql = "INSERT INTO board (board_num, board_name, board_pass, board_subject, Board_content, board_file, board_re_ref, board_re_lev, board_re_seq, board_readcount, board_date) values(?,?,?,?,?,?,?,?,?,?,now())";
 			
 			pstmt = con.prepareStatement(sql);
 			pstmt.setInt(1, num);
@@ -172,6 +172,23 @@ public class BoardDAO {
 		}
 		
 		return insertCount;
+	}
+
+	public int updateReadCount(int board_num) {
+		PreparedStatement pstmt = null;
+		int updateCount = 0;
+		String sql = "UPDATE board SET board_readcount = board_readcount + 1 WHERE board_num = ?";
+		try {
+			pstmt=con.prepareStatement(sql);
+			pstmt.setInt(1, board_num);
+			updateCount = pstmt.executeUpdate();
+		} catch (SQLException ex) {
+			System.out.println("setReadCountUpdate 에러 : " + ex);
+		} finally {
+			if(pstmt != null) close(pstmt);
+		}
+		
+		return updateCount;
 	}
 	
 	//글 답변
