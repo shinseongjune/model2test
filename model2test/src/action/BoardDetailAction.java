@@ -3,6 +3,7 @@ package action;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import svc.BoardDetailService;
 import vo.ActionForward;
 import vo.BoardBean;
 
