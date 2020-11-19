@@ -1,6 +1,7 @@
 package dao;
 
-import static db.JdbcUtil.*;
+import static db.JdbcUtil.close;
+import static db.JdbcUtil.commit;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -173,7 +174,7 @@ public class BoardDAO {
 		
 		return insertCount;
 	}
-	//글 수정
+	//조회수 업데이트
 	public int updateReadCount(int board_num) {
 		PreparedStatement pstmt = null;
 		int updateCount = 0;
@@ -240,6 +241,67 @@ public class BoardDAO {
 		}
 		
 		return insertCount;
+	}
+	//글쓴이인지 확인
+	public boolean isArticleBoardWriter(int board_num, String pass) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String board_sql = "SELECT board_pass FROM board WHERE board_num = ?";
+		boolean isWriter = false;
+		
+		try {
+			pstmt = con.prepareStatement(board_sql);
+			pstmt.setInt(1, board_num);
+			rs = pstmt.executeQuery();
+			rs.next();
+			
+			if(pass.contentEquals(rs.getString(1))) {
+				isWriter = true;
+			}
+		} catch (SQLException ex) {
+			System.out.println("isBoardWriter 에러 : " + ex);
+		} finally {
+			if (pstmt != null) close(pstmt);
+		}
+		return isWriter;
+	}
+	//글 수정
+	public int updateArticle(BoardBean article) {
+		int updateCount = 0;
+		PreparedStatement pstmt = null;
+		String sql = "UPDATE board SET board_subject = ?, board_content = ? WHERE board_num = ?";
+		
+		try {
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, article.getBoard_subject());
+			pstmt.setString(2, article.getBoard_content());
+			pstmt.setInt(3, article.getBoard_num());
+			updateCount = pstmt.executeUpdate();
+		} catch (Exception ex) {
+			System.out.println("boardModify 에러 : " + ex);
+		} finally {
+			close(pstmt);
+		}
+		
+		return updateCount;
+	}
+	//글 삭제
+	public int deleteArticle(int board_num) {
+		PreparedStatement pstmt = null;
+		String board_delete_sql = "DELETE FROM board WHERE board_num = ?";
+		int deleteCount = 0;
+		
+		try {
+			pstmt = con.prepareStatement(board_delete_sql);
+			pstmt.setInt(1, board_num);
+			deleteCount = pstmt.executeUpdate();
+		} catch (Exception ex) {
+			System.out.println("boardDelete 에러 : " + ex);
+		} finally {
+			if (pstmt != null) close(pstmt);
+		}
+		
+		return deleteCount;
 	}
 	
 	//글 답변
