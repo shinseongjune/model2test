@@ -1,6 +1,6 @@
 package dao;
 
-import static db.JdbcUtil.close;
+import static db.JdbcUtil.*;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -148,7 +148,7 @@ public class BoardDAO {
 			else
 				num = 1;
 			
-			sql = "INSERT INTO board (board_num, board_name, board_pass, board_subject, Board_content, board_file, board_re_ref, board_re_lev, board_re_seq, board_readcount, board_date) values(?,?,?,?,?,?,?,?,?,?,now())";
+			sql = "INSERT INTO board values(?,?,?,?,?,?,?,?,?,?,now())";
 			
 			pstmt = con.prepareStatement(sql);
 			pstmt.setInt(1, num);
@@ -173,7 +173,7 @@ public class BoardDAO {
 		
 		return insertCount;
 	}
-
+	//글 수정
 	public int updateReadCount(int board_num) {
 		PreparedStatement pstmt = null;
 		int updateCount = 0;
@@ -189,6 +189,57 @@ public class BoardDAO {
 		}
 		
 		return updateCount;
+	}
+	//글 답변
+	public int insertReplyArticle(BoardBean article) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String board_max_sql = "SELECT MAX(board_num) FROM board";
+		String sql = "";
+		int num = 0;
+		int insertCount = 0;
+		int re_ref = article.getBoard_re_ref();
+		int re_lev = article.getBoard_re_lev();
+		int re_seq = article.getBoard_re_seq();
+		
+		try {
+			pstmt = con.prepareStatement(board_max_sql);
+			rs = pstmt.executeQuery();
+			if(rs.next()) num = rs.getInt(1) + 1;
+			else num = 1;
+			sql = "UPDATE board SET board_re_seq = board_re_seq + 1 WHERE board_re_ref = ? AND board_re_seq > ?";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, re_ref);
+			pstmt.setInt(2, re_seq);
+			int updateCount = pstmt.executeUpdate();
+			
+			if (updateCount > 0) {
+				commit(con);
+			}
+			
+			re_seq = re_seq + 1;
+			re_lev = re_lev + 1;
+			sql = "INSERT INTO board VALUES (?,?,?,?,?,?,?,?,?,?,now())";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, num);
+			pstmt.setString(2, article.getBoard_name());
+			pstmt.setString(3, article.getBoard_pass());
+			pstmt.setString(4, article.getBoard_subject());
+			pstmt.setString(5, article.getBoard_content());
+			pstmt.setString(6, ""); //답장에는 파일을 업로드하지 않음.
+			pstmt.setInt(7, re_ref);
+			pstmt.setInt(8, re_lev);
+			pstmt.setInt(9, re_seq);
+			pstmt.setInt(10, 0);
+			insertCount = pstmt.executeUpdate();
+		} catch (SQLException ex) {
+			System.out.println("boardReply 에러 : " + ex);
+		} finally {
+			if (rs != null) close(rs);
+			if (pstmt != null) close(pstmt);
+		}
+		
+		return insertCount;
 	}
 	
 	//글 답변
