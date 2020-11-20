@@ -13,68 +13,38 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<title>MVC 게시판</title>
-<style>
-	#registForm {
-		width: 500px;
-		height: 600px;
-		border: 1px solid red;
-		margin: auto;
-	}
-	
-	h2 {
-		text-align: center;
-	}
-	
-	table {
-		margin: auto;
-		width: 450px;
-	}
-	
-	#tr_top {
-		background: orange;
-		text-align: center;
-	}
-	
-	#pageList {
-		margin: auto;
-		width: 500px;
-		text-align: center;
-	}
-	
-	#emptyArea {
-		margin: auto;
-		width: 500px;
-		text-align: center;
-	}
-</style>
-</head>
+		<!-- Required meta tags -->
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+		<!-- Bootstrap CSS -->
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" />
+		
+		<title>MVC 게시판</title>
+	</head>
 <body>
 	<!-- 게시판 리스트 -->
-	<section id="listForm">
-		<h2>
-			글 목록<a href="boardWriteForm.do">게시판글쓰기</a>
-		</h2>
-		<table>
+	<div class="container">
+		<h2><mark>자유</mark>게시판</h2>
+		<table class="table">
 			<%
 			if(articleList != null && listCount > 0) {
 			%>
-			
-				<tr id="tr_top">
-					<td>번호</td>
-					<td>제목</td>
-					<td>작성자</td>
-					<td>날짜</td>
-					<td>조회수</td>
+			<thead class="thead-dark">
+				<tr>
+					<th scope="col">번호</th>
+					<th scope="col">제목</th>
+					<th scope="col">작성자</th>
+					<th scope="col">날짜</th>
+					<th scope="col">조회수</th>
 				</tr>
-				
+			</thead>
+			<tbody>
 				<%
 				for(int i=0;i<articleList.size();i++) {
 					
 				%>
 				<tr>
-					<td><%=articleList.get(i).getBoard_num() %></td>
+					<th scope="row"><%=articleList.get(i).getBoard_num() %></th>
 					<td>
 					
 				<%if(articleList.get(i).getBoard_re_lev()!=0) { %>
@@ -91,33 +61,9 @@
 					<td><%=articleList.get(i).getBoard_date() %></td>
 					<td><%=articleList.get(i).getBoard_readcount() %></td>
 				</tr>
-				<%} %>
+				<%} %></tbody>
 		</table>
-	</section>
-	<section id="pageList">
-		<%if(nowPage<=1) { %>
-			[이전]&nbsp;
-		<%}else{ %>
-			<a href="boardList.do?page=<%=nowPage-1 %>">[이전]</a>&nbsp;
-		<%} %>
-		
-		<%for(int a=startPage;a<=endPage;a++){ 
-			if(a==nowPage){%>
-				[<%=a %>]
-			<%}else{ %>
-			
-				<a href="boardList.do?page=<%=a %>">[<%=a %>]
-				</a>&nbsp;
-			<%} %>
-		<%} %>
-		<%if(nowPage>=maxPage){ %>
-			[다음]
-		<%}else{ %>
-			<a href="boardList.do?page=<%=nowPage+1 %>">[다음]</a>
-		<%} %>
-		
-	</section>
-	<%
+			<%
 			}
 			else
 			{
@@ -126,6 +72,43 @@
 	<%
 			}
 	%>
+		<div class="container">
+			<div class="row">
+				<div class="col"></div>
+					<div class="col">
+						<%if(nowPage<=1) { %>
+							<input type="button" class="btn btn-secondary" value="이전"  disabled/>
+						<%}else{ %>
+							<a href="boardList.do?page=<%=nowPage-1 %>"><input type="button" class="btn btn-primary" value="이전" /></a>&nbsp;
+						<%} %>
+						
+						<%for(int a=startPage;a<=endPage;a++){ 
+							if(a==nowPage){%>
+								[<%=a %>]
+							<%}else{ %>
+							
+								<a href="boardList.do?page=<%=a %>">[<%=a %>]
+								</a>&nbsp;
+							<%} %>
+						<%} %>
+						<%if(nowPage>=maxPage){ %>
+							<input type="button" class="btn btn-secondary" value="다음"  disabled/>
+						<%}else{ %>
+							<a href="boardList.do?page=<%=nowPage+1 %>"><input type="button" class="btn btn-primary" value="다음" /></a>
+						<%} %>
+						<a href="boardWriteForm.do"><input type="button" class="btn btn-info" value="글쓰기" /></a>
+					</div>
+				<div class="col"></div>
+			</div>
+		</div>
+	</div>
 	
+	
+
+	
+	<!-- Optional JavaScript; -->
+		<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js"></script>
 </body>
 </html>
