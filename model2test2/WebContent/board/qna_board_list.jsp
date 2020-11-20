@@ -23,7 +23,7 @@
 	</head>
 <body>
 	<!-- 게시판 리스트 -->
-	<div class="container">
+	<div class="container mt-5">
 		<h2><mark>자유</mark>게시판</h2>
 		<table class="table">
 			<%
@@ -51,8 +51,8 @@
 				<%for(int a=0;a<=articleList.get(i).getBoard_re_lev(
 						)*2;a++){ %>
 						&nbsp;
-						<%} %> ▶
-						<%}else{ %>▶<%} %>
+						<%} %> └
+						<%}else{ %>■<%} %>
 							<a href="boardDetail.do?board_num=<%=articleList.get(i).getBoard_num() %>&page=<%=nowPage %>">
 							<%=articleList.get(i).getBoard_subject() %>
 							</a>
@@ -68,39 +68,49 @@
 			else
 			{
 	%>
-		<section id="emptyArea">등록된 글이 없습니다.</section>
+		<div class="container">등록된 글이 없습니다.</div>
 	<%
 			}
 	%>
-		<div class="container">
-			<div class="row">
-				<div class="col"></div>
-					<div class="col">
-						<%if(nowPage<=1) { %>
-							<input type="button" class="btn btn-secondary" value="이전"  disabled/>
-						<%}else{ %>
-							<a href="boardList.do?page=<%=nowPage-1 %>"><input type="button" class="btn btn-primary" value="이전" /></a>&nbsp;
-						<%} %>
-						
-						<%for(int a=startPage;a<=endPage;a++){ 
-							if(a==nowPage){%>
-								[<%=a %>]
-							<%}else{ %>
-							
-								<a href="boardList.do?page=<%=a %>">[<%=a %>]
-								</a>&nbsp;
-							<%} %>
-						<%} %>
-						<%if(nowPage>=maxPage){ %>
-							<input type="button" class="btn btn-secondary" value="다음"  disabled/>
-						<%}else{ %>
-							<a href="boardList.do?page=<%=nowPage+1 %>"><input type="button" class="btn btn-primary" value="다음" /></a>
-						<%} %>
-						<a href="boardWriteForm.do"><input type="button" class="btn btn-info" value="글쓰기" /></a>
-					</div>
-				<div class="col"></div>
-			</div>
-		</div>
+	<nav aria-label="Page navigation example">
+	  <ul class="pagination pagination-sm justify-content-center">
+<%
+		if (nowPage <= 1) {
+%>
+	    <li class="page-item disabled"><a class="page-link" href="boardList.do?page=<%=nowPage-1 %>">Previous</a></li>
+<%
+		} else {
+%>
+	    <li class="page-item"><a class="page-link" href="boardList.do?page=<%=nowPage-1 %>">Previous</a></li>
+<%
+		}
+		for(int a = startPage;a<=endPage;a++){
+			if(a==nowPage){
+%>
+	    <li class="page-item active"><a class="page-link" href="boardList.do?page=<%=a %>"><%=a %></a></li>
+<%
+		} else {
+%>
+		<li class="page-item"><a class="page-link" href="boardList.do?page=<%=a %>"><%=a %></a></li>
+<%
+		}
+		}
+		
+		if(nowPage>=endPage) {
+%>
+	    <li class="page-item disabled"><a class="page-link" href="boardList.do?page=<%=nowPage+1 %>">Next</a></li>
+<%
+		} else {
+%>
+	    <li class="page-item"><a class="page-link" href="boardList.do?page=<%=nowPage+1 %>">Next</a></li>
+<%
+		}
+%>	    
+	  </ul>
+	</nav>
+	<div class="row">
+		<div class="col-2 ml-auto"><a href="boardWriteForm.do"><input type="button" class="btn btn-info" value="글쓰기"/></a></div>
+	</div>
 	</div>
 	
 	
