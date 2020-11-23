@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import action.Action;
+import action.JoinAction;
 import action.LoginAction;
 import vo.ActionForward;
 
@@ -54,6 +55,16 @@ public class FrontController extends HttpServlet {
 			HttpSession session = request.getSession();
 			session.invalidate();
 			response.sendRedirect("index.jsp");
+		} else if (command.contentEquals("/joinForm.do")) {
+			forward = new ActionForward();
+			forward.setPath("joinForm.jsp");
+		} else if (command.contentEquals("/join.do")) {
+			action = new JoinAction();
+			try {
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 		
 		if (forward != null) {

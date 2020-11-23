@@ -12,7 +12,8 @@
 
 	if(loginMember == null){
 %>
-		<a href="loginForm.do">로그인</a>
+		<a href="loginForm.do">로그인</a><br/>
+		<a href="joinForm.do">회원가입</a>
 <%
 	} else {
 %>

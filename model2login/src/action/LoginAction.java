@@ -25,6 +25,7 @@ public class LoginAction implements Action {
 			HttpSession session = request.getSession();
 			session.setAttribute("loginMember", loginMember);
 			forward = new ActionForward();
+			forward.setRedirect(true);
 			forward.setPath("index.do");
 		} else {
 			response.setContentType("text/html;charset=UTF-8");
