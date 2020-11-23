@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8" import="vo.Member" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -8,15 +8,15 @@
 </head>
 <body>
 <%
-	String id = (String) session.getAttribute("id");
+	Member loginMember = (Member) session.getAttribute("loginMember");
 
-	if(id == null){
+	if(loginMember == null){
 %>
-		<a href="loginForm.html">로그인</a>
+		<a href="loginForm.do">로그인</a>
 <%
 	} else {
 %>
-		<a href="logout">로그아웃</a>
+		<a href="logout.do">로그아웃</a>
 <%
 	}
 %>
