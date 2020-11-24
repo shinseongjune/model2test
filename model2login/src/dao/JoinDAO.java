@@ -1,5 +1,6 @@
 package dao;
 
+import static db.JdbcUtil.*;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 
@@ -52,8 +53,17 @@ public class JoinDAO {
 				joinedMember.setName(joinMember.getName());
 				joinedMember.setNation(joinMember.getNation());
 			}
+			commit(conn);
 		} catch (Exception e) {
+			rollback(conn);
 			e.printStackTrace();
+		} finally {
+			try {
+				pstmt.close();
+				conn.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 		return joinedMember;
 	}

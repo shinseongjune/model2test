@@ -59,4 +59,32 @@ public class LoginDAO {
 		}
 		return loginMember;
 	}
+
+	public int insertMember(Member member) {
+		PreparedStatement pstmt = null;
+		int joinMember = 0;
+		try {
+			pstmt = conn.prepareStatement("INSERT INTO users VALUES (?,?,?,?,?,?,?,?)");
+			pstmt.setString(1, member.getId());
+			pstmt.setString(2, member.getPasswd());
+			pstmt.setString(3, member.getAddr());
+			pstmt.setInt(4, Integer.parseInt(member.getPasswd()));
+			pstmt.setString(5, member.getEmail());
+			pstmt.setString(6, member.getGender());
+			pstmt.setString(7, member.getName());
+			pstmt.setString(8, member.getNation());
+			joinMember = pstmt.executeUpdate();
+			commit(conn);
+		} catch (Exception e) {
+			rollback(conn);
+			e.printStackTrace();
+		} finally {
+			try {
+				close(pstmt);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return joinMember;
+	}
 }

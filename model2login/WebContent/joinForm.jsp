@@ -36,7 +36,7 @@
 					<h3>Sign In</h3>
 				</div>
 				<div class="card-body bg-transparent">
-					<form action="join.do" method="post">
+					<form action="joinPro.do" method="post">
 						<div class="input-group input-group-lg flex-nowrap mb-2">
 						  <div class="input-group-prepend">
 						    <span class="input-group-text" id="addon-wrapping">@</span>
@@ -60,7 +60,7 @@
 						  <div class="input-group-prepend">
 						    <span class="input-group-text" id="addon-wrapping">@</span>
 						  </div>
-						  <input type="text" class="form-control" placeholder="Age" name="age"/>
+						  <input type="number" class="form-control" placeholder="Age" name="age"/>
 						</div>
 						<div class="input-group input-group-lg flex-nowrap mb-2">
 						  <div class="input-group-prepend">

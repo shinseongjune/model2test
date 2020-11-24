@@ -12,6 +12,7 @@ import javax.servlet.http.HttpSession;
 
 import action.Action;
 import action.JoinAction;
+import action.JoinAction2;
 import action.LoginAction;
 import vo.ActionForward;
 
@@ -41,25 +42,35 @@ public class FrontController extends HttpServlet {
 		if(command.contentEquals("/index.do")) {
 			forward = new ActionForward();
 			forward.setPath("/index.jsp");
-		} else if (command.contentEquals("/login.do")) {
+		} else if (command.contentEquals("/loginPro.do")) {
 			action = new LoginAction();
 			try {
 				forward = action.execute(request, response);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-		} else if (command.contentEquals("/loginForm.do")) {
+		} else if (command.contentEquals("/login.do")) {
 			forward = new ActionForward();
 			forward.setPath("loginForm.html");
 		} else if (command.contentEquals("/logout.do")) {
 			HttpSession session = request.getSession();
 			session.invalidate();
 			response.sendRedirect("index.jsp");
-		} else if (command.contentEquals("/joinForm.do")) {
+		} else if (command.contentEquals("/join.do")) {
 			forward = new ActionForward();
 			forward.setPath("joinForm.jsp");
-		} else if (command.contentEquals("/join.do")) {
+		} else if (command.contentEquals("/joinPro.do")) {
 			action = new JoinAction();
+			try {
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} else if (command.contentEquals("/join2.do")) {
+			forward = new ActionForward();
+			forward.setPath("joinForm2.jsp");
+		} else if (command.contentEquals("/joinPro2.do")) {
+			action = new JoinAction2();
 			try {
 				forward = action.execute(request, response);
 			} catch (Exception e) {
