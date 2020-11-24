@@ -63,7 +63,7 @@ public class LoginServlet extends HttpServlet {
 			response.addCookie(passwdCookie);
 		}
 		
-		if (loginmember != null) {
+		if (loginMember != null) {
 			RequestDispatcher dispatcher = request.getRequestDispatcher("loginSuccess.jsp");
 			request.setAttribute("loginMember",  loginMember);
 			dispatcher.forward(request,response);
