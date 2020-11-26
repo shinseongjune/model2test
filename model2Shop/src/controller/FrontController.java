@@ -11,7 +11,9 @@ import javax.servlet.http.HttpServletResponse;
 
 import action.Action;
 import action.DogListAction;
+import action.DogRegistAction;
 import action.DogRegistFormAction;
+import action.DogViewAction;
 import vo.ActionForward;
 
 @WebServlet("*.do")
@@ -43,6 +45,20 @@ public class FrontController extends HttpServlet {
 			}
 		} else if(command.contentEquals("/dogRegistForm.do")) {
 			action = new DogRegistFormAction();
+			try {
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} else if(command.contentEquals("/dogRegist.do")) {
+			action = new DogRegistAction();
+			try {
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} else if(command.contentEquals("/dogView.do")) {
+			action = new DogViewAction();
 			try {
 				forward = action.execute(request, response);
 			} catch (Exception e) {
