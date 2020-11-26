@@ -10,6 +10,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import action.Action;
+import action.DogCartAddAction;
+import action.DogCartListAction;
 import action.DogListAction;
 import action.DogRegistAction;
 import action.DogRegistFormAction;
@@ -59,6 +61,20 @@ public class FrontController extends HttpServlet {
 			}
 		} else if(command.contentEquals("/dogView.do")) {
 			action = new DogViewAction();
+			try {
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} else if(command.contentEquals("/dogCartAdd.do")) {
+			action = new DogCartAddAction();
+			try {
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} else if(command.contentEquals("/dogCartList.do")) {
+			action = new DogCartListAction();
 			try {
 				forward = action.execute(request, response);
 			} catch (Exception e) {
