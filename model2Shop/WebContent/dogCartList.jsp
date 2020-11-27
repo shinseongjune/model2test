@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ page import="com.sun.org.apache.bcel.internal.generic.*, vo.Cart, vo.Dog, dao.DogDAO, java.util.List, java.text.SimpleDateFormat, java.util.ArrayList" %>
+<%@ page import="com.sun.org.apache.bcel.internal.generic.*, vo.Cart, vo.Dog,dao.MemberDAO, java.util.List, java.text.SimpleDateFormat, java.util.ArrayList" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
