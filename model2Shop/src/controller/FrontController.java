@@ -12,6 +12,10 @@ import javax.servlet.http.HttpServletResponse;
 import action.Action;
 import action.DogCartAddAction;
 import action.DogCartListAction;
+import action.DogCartQtyDownAction;
+import action.DogCartQtyUpAction;
+import action.DogCartRemoveAction;
+import action.DogCartSearchAction;
 import action.DogListAction;
 import action.DogRegistAction;
 import action.DogRegistFormAction;
@@ -75,6 +79,34 @@ public class FrontController extends HttpServlet {
 			}
 		} else if(command.contentEquals("/dogCartList.do")) {
 			action = new DogCartListAction();
+			try {
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} else if(command.contentEquals("/dogCartSearch.do")) {
+			action = new DogCartSearchAction();
+			try {
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} else if(command.contentEquals("/dogCartRemove.do")) {
+			action = new DogCartRemoveAction();
+			try {
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} else if(command.contentEquals("/dogCartQtyUp.do")) {
+			action = new DogCartQtyUpAction();
+			try {
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} else if(command.contentEquals("/dogCartQtyDown.do")) {
+			action = new DogCartQtyDownAction();
 			try {
 				forward = action.execute(request, response);
 			} catch (Exception e) {

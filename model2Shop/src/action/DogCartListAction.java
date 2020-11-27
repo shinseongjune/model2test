@@ -13,7 +13,7 @@ public class DogCartListAction implements Action {
 
 	@Override
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		DogCartListService dogCartlistService = new dogCartListService();
+		DogCartListService dogCartlistService = new DogCartListService();
 		ArrayList<Cart> cartList = dogCartlistService.getCartList(request);
 		//총금액계산
 		int totalMoney = 0;
